@@ -1,0 +1,7 @@
+// Detect failed logins by source IP
+DeviceLogonEvents
+| where LogonType has_any("Network", "Interactive", "RemoteInteractive", "Unlock")
+| where ActionType == "LogonFailed"
+| where isnotempty(RemoteIP)
+| summarize FailedAttempts = count() by RemoteIP
+| order by FailedAttempts desc

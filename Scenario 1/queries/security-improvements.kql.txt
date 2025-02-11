@@ -1,0 +1,5 @@
+// Monitor for MFA failures (potential bypass attempts)
+DeviceLogonEvents
+| where ActionType == "MFA_Failed"
+| summarize Attempts = count() by AccountName, RemoteIP
+| order by Attempts desc

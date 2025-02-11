@@ -1,0 +1,5 @@
+// Check if known attacker IPs have logged in successfully
+let RemoteIPsInQuestion = dynamic(["88.214.25.111","49.128.176.156", "77.90.185.223", "194.0.234.31"]);
+DeviceLogonEvents
+| where ActionType == "LogonSuccess"
+| where RemoteIP has_any(RemoteIPsInQuestion)

@@ -1,0 +1,6 @@
+// List successful logins for analysis
+DeviceLogonEvents
+| where LogonType has_any("Network", "Interactive", "RemoteInteractive", "Unlock")
+| where ActionType == "LogonSuccess"
+| summarize SuccessCount = count() by RemoteIP, AccountName
+| order by SuccessCount desc
